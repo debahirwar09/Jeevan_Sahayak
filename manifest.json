@@ -1,0 +1,19 @@
+{
+  "name": "Jeevan Sahayak",
+  "short_name": "Jeevan Sahayak",
+  "description": "Smart daily life assistant",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#087ee9",
+  "scope": "./",
+  "orientation": "portrait-primary",
+  "theme_color": "#087ee9",
+  "icons": [
+    {
+      "src": "./logo.jpg?v=jeevan-sahayak-logo-20260915-v3",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

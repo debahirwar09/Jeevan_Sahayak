@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<link rel="icon" type="image/jpeg" href="./logo.jpg?v=jeevan-sahayak-logo-20260915-v3">
+<meta name="description" content="Jeevan Sahayak — an installable daily life assistant">
+<link rel="manifest" href="manifest.json">
+<title>Jeevan Sahayak</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--text:#182230;--muted:#667085;--line:#e5e7eb;--p:#2563eb;--soft:#eff6ff;--danger:#dc2626;--ok:#16a34a;--warn:#d97706;--shadow:0 8px 28px #0f172a12}
+[data-theme=dark]{--bg:#0b1220;--card:#141d2e;--text:#f8fafc;--muted:#a7b0c0;--line:#29354a;--soft:#18345a;--shadow:0 8px 28px #0005}
+*{box-sizing:border-box}html{width:100%;max-width:100%;overflow-x:hidden}body{margin:0;width:100%;max-width:100%;overflow-x:hidden;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding-bottom:80px}button,input,select,textarea{font:inherit;max-width:100%}button{cursor:pointer}img,video,iframe{max-width:100%}
+.splash{position:fixed;inset:0;z-index:100;background:#06182d;display:grid;place-items:center;transition:opacity .35s ease,visibility .35s ease}.splash.hide{opacity:0;visibility:hidden;pointer-events:none}.splash-logo{width:min(180px,42vw);height:min(180px,42vw);object-fit:contain;border-radius:30px;box-shadow:0 18px 45px #0006}.splash-fallback{display:grid;place-items:center;background:#087ee9;color:#111;font-size:min(100px,24vw);font-weight:900}
+header{background:linear-gradient(135deg,#1d4ed8,#2563eb,#38bdf8);color:#fff;padding:18px 14px}.head{width:100%;max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;min-width:0}.brand{display:flex;align-items:center;gap:10px;min-width:0}.brand>div:last-child{min-width:0}.brand h1,.sub{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.logo{width:44px;height:44px;border-radius:13px;background:#ffffff2b;display:grid;place-items:center;overflow:hidden}.logo img{width:100%;height:100%;object-fit:contain;border-radius:10px}.app-logo{display:block;object-fit:contain;border-radius:18px}.login-logo{width:96px;height:96px;margin-bottom:8px}.guide-logo img{display:block;width:100%;height:100%;object-fit:contain;border-radius:20px}h1{font-size:22px;margin:0}.sub{font-size:12px;opacity:.9}.head-actions{display:flex;gap:7px;align-items:center}.language-select{border:1px solid #ffffff55;background:#ffffff20;color:#fff;border-radius:10px;padding:8px 9px;max-width:125px}.language-select option{color:#182230;background:#fff}.iconbtn{border:1px solid #ffffff45;background:#ffffff18;color:#fff;border-radius:10px;padding:8px 10px}
+.wrap{width:100%;max-width:1200px;margin:16px auto;padding:0 13px;min-width:0}.tabs{display:flex;gap:7px;overflow-x:auto;overflow-y:hidden;padding-bottom:5px;max-width:100%;scrollbar-width:none;position:relative;z-index:2;pointer-events:auto}.tabs::-webkit-scrollbar{display:none}.tab{border:1px solid var(--line);background:var(--card);color:var(--text);padding:9px 12px;border-radius:10px;white-space:nowrap;flex-shrink:0;position:relative;z-index:3;pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.tab.active{background:var(--p);color:#fff;border-color:var(--p)}
+.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;min-width:0}.card{min-width:0;max-width:100%;background:var(--card);border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:var(--shadow)}.stat span{font-size:12px;color:var(--muted)}.stat strong{font-size:25px;display:block;margin-top:5px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.actions{display:flex;gap:7px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:9px 13px;background:var(--p);color:#fff;font-weight:700}.btn.soft{background:var(--soft);color:var(--p)}.btn.danger{background:#fee2e2;color:#991b1b}.btn.ok{background:#dcfce7;color:#166534}.btn.sm{padding:6px 9px;font-size:12px}.search{width:100%;margin:10px 0;padding:11px 13px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--text)}.list{display:grid;gap:9px}.item{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:10px}.main{min-width:0}.title{font-weight:750}.meta{color:var(--muted);font-size:12px;margin-top:4px}.done{opacity:.5}.done .title{text-decoration:line-through}.form{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--text)}.field textarea{min-height:80px;resize:vertical}.full{grid-column:1/-1}.progress{height:9px;background:#dbe2eb;border-radius:20px;overflow:hidden}.progress i{display:block;height:100%;background:var(--p);width:0}.barwrap{height:190px;display:flex;align-items:end;gap:8px;padding:10px 5px 25px;border-bottom:1px solid var(--line)}.bar{flex:1;min-width:7px;background:var(--p);border-radius:5px 5px 0 0;position:relative}.bar small{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--muted)}.bar em{position:absolute;top:-17px;left:50%;transform:translateX(-50%);font-size:9px;font-style:normal}
+.modal{position:fixed;inset:0;background:#0008;display:none;place-items:center;padding:14px;z-index:30}.modal.show{display:grid}.modalbox{width:min(580px,100%);max-height:90vh;overflow:auto;background:var(--card);border-radius:17px;padding:18px}.close{border:0;background:#e5e7eb;border-radius:8px;padding:6px}.toast{position:fixed;right:15px;bottom:15px;background:#111827;color:#fff;padding:11px 14px;border-radius:11px;display:none;z-index:50}.toast.show{display:block}
+.login{min-height:100vh;display:grid;place-items:center;padding:16px;background:linear-gradient(135deg,#eff6ff,#f8fafc)}.loginbox{width:min(460px,100%);background:#fff;padding:25px;border-radius:20px;box-shadow:var(--shadow)}.loginbox input,.loginbox select{width:100%;padding:12px;margin:6px 0 12px;border:1px solid #dce2eb;border-radius:10px;background:#fff;color:#182230}.loginbox label{display:block;font-size:13px;font-weight:700;color:#344054}.switch{border:0;background:none;color:#2563eb;font-weight:700;padding:8px 0}.adminbox{width:min(1100px,100%);background:var(--card);padding:22px;border-radius:20px;box-shadow:var(--shadow)}.admin-table{width:100%;border-collapse:collapse;font-size:13px}.admin-table th,.admin-table td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}.admin-table th{color:var(--muted);font-size:12px}.admin-table td:last-child{white-space:nowrap}.admin-table .actions{flex-wrap:nowrap}.admin-table .btn{min-width:58px}.admin-stats{grid-template-columns:repeat(4,1fr)}.note{font-size:11px;color:#667085}.hidden{display:none!important}.profile-details{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.profile-field{background:var(--soft);border-radius:11px;padding:10px}.profile-field span{display:block;color:var(--muted);font-size:11px}.profile-field b{display:block;margin-top:3px}@media(max-width:600px){.profile-details{grid-template-columns:1fr 1fr}}
+.bottom{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:none;z-index:15;padding:8px}.bottom div{display:flex;justify-content:space-around}.bottom button{border:0;background:none;color:var(--muted);font-size:11px}.bottom button b{display:block;font-size:19px}.badge{display:inline-block;padding:3px 7px;border-radius:99px;background:var(--soft);color:var(--p);font-size:10px;font-weight:700}.overdue{color:var(--danger)!important;font-weight:700}
+@media(max-width:850px){.grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){html,body{touch-action:manipulation}.grid,.form{grid-template-columns:1fr}.full{grid-column:auto}.head-actions span{display:none}.bottom{display:block}.bottom button{min-width:0;flex:1}.bottom div{gap:2px}.tabs{display:grid;grid-template-columns:repeat(3,1fr);overflow:visible;position:relative;z-index:5}.tab{font-size:12px;padding:8px 5px;min-height:38px;line-height:1.2}.tabs .tab:nth-child(n+7){display:none}input,select,textarea{font-size:16px}}
+.quickgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:12px}
+.quickcard{border:1px solid var(--line);background:var(--card);border-radius:13px;padding:12px;text-align:center;color:var(--text)}
+.quickcard b{display:block;font-size:22px}.quickcard span{font-size:11px;color:var(--muted)}
+.streak{display:flex;gap:5px;flex-wrap:wrap}.daydot{width:25px;height:25px;border-radius:7px;background:var(--line);display:grid;place-items:center;font-size:10px}.daydot.on{background:var(--p);color:#fff}
+@media(max-width:850px){.quickgrid{grid-template-columns:repeat(3,1fr)}}@media(max-width:600px){.quickgrid{grid-template-columns:repeat(2,1fr)}}
+.more-menu{position:fixed;right:10px;bottom:64px;z-index:20;display:none;width:min(290px,calc(100vw - 20px));padding:12px;background:var(--card);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow)}.more-menu.show{display:block}.more-menu h3{margin:2px 4px 10px}.more-menu .actions{display:grid;grid-template-columns:1fr 1fr}.more-menu button{width:100%}
+.ai-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:12px}.ai-chat{min-height:260px;max-height:360px;overflow:auto;display:grid;gap:9px;padding:4px}.ai-msg{max-width:88%;padding:10px 12px;border-radius:13px;line-height:1.45;font-size:13px}.ai-msg.bot{background:var(--soft);color:var(--text);justify-self:start}.ai-msg.user{background:var(--p);color:#fff;justify-self:end}.ai-input{display:flex;gap:8px;margin-top:10px}.ai-input input{flex:1;min-width:0;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text)}.live-stat{border-left:4px solid var(--p);padding-left:10px}.live-stat b{display:block;font-size:20px}.ai-suggestions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.ai-suggestions button{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:99px;padding:7px 10px;font-size:11px}@media(max-width:700px){.ai-grid{grid-template-columns:1fr}}
+.exercise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.exercise-card{border:1px solid var(--line);border-radius:13px;padding:13px;background:var(--card)}.exercise-card h3{margin:0 0 5px;font-size:15px}.exercise-card .timer{font-size:22px;font-weight:800;color:var(--p)}.exercise-card.stretch{background:var(--soft)}.timerbox{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}.big-timer{font-size:42px;font-weight:800;color:var(--p)}
+@media(max-width:850px){.exercise-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.exercise-grid{grid-template-columns:1fr}.timerbox{grid-template-columns:1fr;text-align:center}}
+.guide{min-height:100vh;padding:24px 14px 36px;background:linear-gradient(135deg,#087ee9 0%,#18a8d5 32%,#f7fff9 58%,#20b957 100%);color:#12315d;position:relative;isolation:isolate;overflow:hidden}.guide::before{content:"";position:fixed;inset:0;background:url('./logo.jpg?v=jeevan-sahayak-logo-20260915-v3') center top/ min(100vw,900px) auto no-repeat;opacity:.12;z-index:-1;pointer-events:none}.guide-wrap{max-width:1100px;margin:auto}.guide-hero{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:center;padding:28px;border-radius:28px;background:linear-gradient(135deg,#ffffffed,#f4fff8ed);box-shadow:0 12px 35px #064d8c55;border:1px solid #ffffff}.guide-brand{display:flex;gap:12px;align-items:center}.guide-logo{width:96px;height:96px;border-radius:24px;display:grid;place-items:center;background:#ffffffdd;box-shadow:0 8px 22px #087ee955;padding:5px;overflow:hidden}.guide-logo img{display:block;width:100%;height:100%;object-fit:contain;border-radius:19px}.guide h1{font-size:clamp(28px,5vw,48px);line-height:1.05;color:#10498d}.guide h1 span{color:#139347}.guide h2{font-size:clamp(23px,3vw,34px);margin:8px 0;color:#123f79}.guide p{line-height:1.55}.guide-tag{display:inline-block;background:#086b48;color:#fff;padding:10px 18px;border-radius:99px;font-weight:800;margin:18px 0 5px}.guide-phone{min-height:260px;border-radius:30px;padding:24px 18px;background:linear-gradient(155deg,#d9f4ff,#fff);border:7px solid #182536;box-shadow:12px 15px 0 #0b558b22;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.guide-phone .sun{font-size:65px}.guide-phone b{font-size:24px;color:#168c4b}.guide-phone small{color:#14549b}.guide-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.guide-btn{border:0;border-radius:12px;padding:12px 18px;background:#168b50;color:#fff;font-weight:800;cursor:pointer}.guide-btn.alt{background:#e5f2ff;color:#1356a0}.guide-section-title{text-align:center;margin:28px 0 14px}.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.guide-card{background:#fff;border:1px solid #d9e9f0;border-radius:17px;padding:17px;box-shadow:0 5px 18px #164e6310}.guide-card .guide-icon{font-size:30px}.guide-card h3{margin:7px 0 3px;color:#154d86}.guide-card p{margin:0;font-size:13px;color:#52657a}.guide-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.guide-step{text-align:center;background:#ffffffc9;border-radius:15px;padding:13px;border:1px solid #e1edf2}.guide-step strong{display:grid;place-items:center;width:31px;height:31px;border-radius:50%;background:#168b50;color:#fff;margin:auto}.guide-step b{display:block;margin-top:7px;font-size:13px}.guide-step span{font-size:11px;color:#5a6c7c}.guide-note{margin-top:18px;padding:14px 16px;border-left:5px solid #f59e0b;background:#fff9e8;border-radius:10px;font-size:13px;color:#684d12}@media(max-width:700px){.guide-hero{grid-template-columns:1fr;padding:20px}.guide-grid{grid-template-columns:1fr 1fr}.guide-steps{grid-template-columns:1fr 1fr}}@media(max-width:420px){.guide-grid{grid-template-columns:1fr}.guide-steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="splash" class="splash" aria-label="Jeevan Sahayak loading"><img class="splash-logo" src="./logo.jpg?v=jeevan-sahayak-logo-20260915-v3" alt="Jeevan Sahayak logo" onerror="useLogoFallback(this)"></div>
+<script>
+  // Fail-safe: never leave the app covered by the loading screen.
+  setTimeout(() => document.getElementById("splash")?.classList.add("hide"), 2500);
+</script>
+<div id="guide" class="guide hidden">
+  <div class="guide-wrap">
+    <div class="guide-hero">
+      <div>
+        <div class="guide-brand"><div class="guide-logo"><img src="./logo.jpg?v=jeevan-sahayak-logo-20260915-v3" alt="Jeevan Sahayak logo" onerror="useLogoFallback(this)"></div><div><b>Jeevan Sahayak <span style="color:#168b50">3.0</span></b><div style="font-size:12px;color:#35628e">Har Kadam Par Aapke Saath</div></div></div>
+        <span class="guide-tag">Smart • Simple • Sabke Liye</span>
+        <h1>Jeevan <span>Sahayak</span></h1>
+        <h2>Har zaroorat ka ek hi platform</h2>
+        <p>Apni daily life ko organize, healthy aur stress-free banane ke liye ek simple personal assistant.</p>
+        <div class="guide-actions"><button class="guide-btn" onclick="startGuide()">🚀 Start Using App</button><button class="guide-btn alt" onclick="skipGuide()">Skip Guide</button><button class="guide-btn alt" onclick="guideLogin()">🔐 Login / Register</button></div>
+      </div>
+      <div class="guide-phone"><img src="./logo.jpg?v=jeevan-sahayak-logo-20260915-v3" alt="Jeevan Sahayak 3.0 logo" onerror="useLogoFallback(this)" style="width:min(230px,80vw);height:190px;object-fit:contain;border-radius:22px"><b>Small Steps,<br>Big Changes</b><small>Health · Money · Goals · Growth</small></div>
+    </div>
+    <h2 class="guide-section-title">App mein kya-kya milega?</h2>
+    <div class="guide-grid">
+      <div class="guide-card"><div class="guide-icon">❤️</div><h3>Health Care</h3><p>Medicine reminders, water tracking, habits aur exercise timer se sehat ka dhyan rakhein.</p></div>
+      <div class="guide-card"><div class="guide-icon">📝</div><h3>Daily Planning</h3><p>Tasks, reminders, calendar aur goals ke saath apna din behtar plan karein.</p></div>
+      <div class="guide-card"><div class="guide-icon">💰</div><h3>Finance</h3><p>Expenses record karein, monthly budget dekhein aur apni savings ko track karein.</p></div>
+      <div class="guide-card"><div class="guide-icon">🧠</div><h3>Personal Growth</h3><p>Habits, notes, achievements aur daily exercise se apne goals ki taraf badhein.</p></div>
+      <div class="guide-card"><div class="guide-icon">🆘</div><h3>Trusted Contacts</h3><p>Important contacts save karein aur zaroorat par ek tap mein call karein.</p></div>
+      <div class="guide-card"><div class="guide-icon">🔔</div><h3>Smart Alerts</h3><p>Reminder ya medicine ke time browser notification aur alarm alert paayen.</p></div>
+    </div>
+    <h2 class="guide-section-title">Kaise use karein?</h2>
+    <div class="guide-steps"><div class="guide-step"><strong>1</strong><b>Profile banayein</b><span>Name aur basic details bharein</span></div><div class="guide-step"><strong>2</strong><b>Apni zaroorat chunein</b><span>Tasks, health ya money se shuru karein</span></div><div class="guide-step"><strong>3</strong><b>Reminder set karein</b><span>Time par alert paane ke liye</span></div><div class="guide-step"><strong>4</strong><b>Daily track karein</b><span>Water, habits aur expenses update karein</span></div><div class="guide-step"><strong>5</strong><b>Progress dekhein</b><span>Reports aur badges unlock karein</span></div></div>
+    <div class="guide-note"><b>💡 Helpful Guidelines:</b> Apne reminders sahi time par set karein, roz water aur habits update karein, budget ko regularly check karein, emergency contacts add rakhein aur notifications allow karein. Yeh app personal organization ke liye hai—medical emergency mein turant doctor ya local emergency service se contact karein.</div>
+  </div>
+</div>
+
+<div id="register" class="login">
+  <div class="loginbox">
+    <img class="app-logo login-logo" src="./logo.jpg?v=jeevan-sahayak-logo-20260915-v3" alt="Jeevan Sahayak logo" onerror="useLogoFallback(this)">
+    <h1 style="color:#172033">Create your profile</h1>
+    <p style="color:#667085">Register once to start using Jeevan Sahayak.</p>
+    <form onsubmit="registerUser(event)">
+      <label>Name</label><input id="registerName" maxlength="50" required placeholder="Enter your name">
+      <label>Gender</label><select id="registerGender" required><option value="">Select gender</option><option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option></select>
+      <label>Date of birth</label><input id="registerDob" type="text" inputmode="numeric" autocomplete="bday" pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}" maxlength="10" required placeholder="DD/MM/YYYY" oninput="formatDob(this)">
+      <label>Phone number</label><input id="registerPhone" type="tel" inputmode="numeric" pattern="[0-9]{7,15}" maxlength="15" required placeholder="Enter phone number">
+      <div class="form" style="margin-top:4px"><div class="field"><label>Height (cm)</label><input id="registerHeight" type="number" min="50" max="250" step="0.1" required placeholder="e.g. 170"></div><div class="field"><label>Weight (kg)</label><input id="registerWeight" type="number" min="10" max="300" step="0.1" required placeholder="e.g. 65"></div></div>
+      <label>Password</label><input id="registerPassword" type="password" minlength="6" maxlength="100" required placeholder="At least 6 characters">
+      <label>Captcha: <b id="captchaQuestion"></b></label><input id="captchaAnswer" type="text" inputmode="numeric" pattern="[0-9]+" maxlength="4" required placeholder="Answer">
+      <button class="btn" style="width:100%" type="submit">Create Profile</button>
+    </form>
+    <button class="switch" onclick="showUserLogin()">Already registered? Login</button>
+    <button class="switch" onclick="showAdminLogin()">🔐 Admin Login</button>
+    <button class="switch" onclick="replayGuide()">📖 View Entrance Guide & Guidelines</button>
+    <p class="note">Your profile is stored locally on this device.</p>
+  </div>
+</div>
+
+<div id="login" class="login hidden">
+  <div class="loginbox">
+    <img class="app-logo login-logo" src="./logo.jpg?v=jeevan-sahayak-logo-20260915-v3" alt="Jeevan Sahayak logo" onerror="useLogoFallback(this)">
+    <h1 style="color:#172033">User login</h1><p style="color:#667085">Access your saved profile.</p>
+    <form onsubmit="signIn(event)">
+      <label>Phone number</label><input id="loginPhone" type="tel" inputmode="numeric" pattern="[0-9]{7,15}" maxlength="15" required placeholder="Enter phone number">
+      <label>Password</label><input id="loginPassword" type="password" required placeholder="Enter password">
+      <label>Captcha: <b id="loginCaptchaQuestion"></b></label><input id="loginCaptchaAnswer" type="text" inputmode="numeric" pattern="[0-9]+" maxlength="4" required placeholder="Answer">
+      <button class="btn" style="width:100%" type="submit">Login</button>
+    </form>
+    <button class="switch" onclick="showRegister()">← Create a new profile</button>
+    <button class="switch" onclick="showForgotPassword()">Forgot password?</button>
+  </div>
+</div>
+
+<div id="forgotPassword" class="login hidden">
+  <div class="loginbox">
+    <img class="app-logo login-logo" src="./logo.jpg?v=jeevan-sahayak-logo-20260915-v3" alt="Jeevan Sahayak logo" onerror="useLogoFallback(this)">
+    <h1 style="color:#172033">Forgot password</h1>
+    <p style="color:#667085">Enter your registered phone number and date of birth.</p>
+    <form onsubmit="recoverPassword(event)">
+      <label>Phone number</label><input id="forgotPhone" type="tel" inputmode="numeric" pattern="[0-9]{7,15}" maxlength="15" required placeholder="Enter phone number">
+      <label>Date of birth</label><input id="forgotDob" type="text" inputmode="numeric" autocomplete="bday" pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}" maxlength="10" required placeholder="DD/MM/YYYY" oninput="formatDob(this)">
+      <label>Captcha: <b id="forgotCaptchaQuestion"></b></label><input id="forgotCaptchaAnswer" type="text" inputmode="numeric" pattern="[0-9]+" maxlength="4" required placeholder="Answer">
+      <label>New password</label><input id="forgotNewPassword" type="password" minlength="6" maxlength="100" required placeholder="At least 6 characters">
+      <button class="btn" style="width:100%" type="submit">Reset password</button>
+    </form>
+    <div id="forgotResult" class="card hidden" style="margin-top:13px;text-align:center"></div>
+    <button class="switch" onclick="showUserLogin()">← Back to login</button>
+  </div>
+</div>
+
+<div id="adminLogin" class="login hidden">
+  <div class="loginbox">
+    <img class="app-logo login-logo" src="./logo.jpg?v=jeevan-sahayak-logo-20260915-v3" alt="Jeevan Sahayak logo" onerror="useLogoFallback(this)"><h1 style="color:#172033">Admin Login <span class="note">(demo/local only)</span></h1>
+    <form onsubmit="adminSignIn(event)">
+      <label>Username</label><input id="adminUser" required autocomplete="username">
+      <label>Password</label><input id="adminPass" type="password" required autocomplete="current-password">
+      <button class="btn" style="width:100%" type="submit">Sign In</button>
+    </form>
+    <button class="switch" onclick="showUserLogin()">← User login</button>
+  </div>
+</div>
+
+<div id="admin" class="login hidden">
+  <div class="adminbox">
+    <div class="row"><div><h1 style="color:var(--text)">Admin Dashboard</h1><div class="meta">Registered user profiles on this device</div></div><button class="btn danger" onclick="adminLogout()">Logout</button></div>
+    <div class="grid admin-stats" style="margin-top:14px">
+      <div class="card stat"><span>Total users</span><strong id="adminTotal">0</strong></div>
+      <div class="card stat"><span>Registered today</span><strong id="adminToday">0</strong></div>
+      <div class="card stat"><span>Male profiles</span><strong id="adminMale">0</strong></div>
+      <div class="card stat"><span>Female profiles</span><strong id="adminFemale">0</strong></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="row"><b>User management</b><div class="actions"><button class="btn sm soft" onclick="exportUsers()">⬇️ Export Excel</button><button class="btn sm danger" onclick="clearUsers()">🗑️ Clear all</button></div></div>
+      <input id="adminSearch" class="search" placeholder="Search by name, phone or gender..." oninput="renderAdmin()">
+      <div style="overflow:auto"><table class="admin-table"><thead><tr><th>Name</th><th>Gender</th><th>Date of birth</th><th>Phone</th><th>Registered</th><th>Action</th></tr></thead><tbody id="adminUsers"></tbody></table></div>
+      <div id="adminUserDetails" class="card hidden" style="margin-top:14px"></div>
+    </div>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+<header><div class="head"><div class="brand"><div class="logo"><img src="./logo.jpg?v=jeevan-sahayak-logo-20260915-v3" alt="Jeevan Sahayak logo" onerror="useLogoFallback(this)"></div><div><h1>Jeevan Sahayak</h1><div class="sub">Smart Daily Life Assistant</div></div></div>
+<div class="head-actions"><span id="hello"></span><label for="languageSelect" class="hidden">Language</label><select id="languageSelect" class="language-select" aria-label="Language: English, Hinglish or Hindi" onchange="setLanguage(this.value)"><option value="en">English</option><option value="hinglish">Hinglish</option><option value="hi">हिन्दी (Hindi)</option></select><button class="iconbtn" aria-label="Toggle dark mode" onclick="toggleTheme()">🌙</button><button class="iconbtn" aria-label="Enable notifications" onclick="enableNotifications()">🔔</button></div></div></header>
+<main class="wrap">
+<nav class="tabs">
+<button class="tab active" data-page="home">🏠 Home</button><button class="tab" data-page="tasks">📝 Tasks</button><button class="tab" data-page="reminders">⏰ Reminders</button><button class="tab" data-page="expenses">💰 Money</button><button class="tab" data-page="health">❤️ Health</button><button class="tab" data-page="exercise">🏃 Exercise</button><button class="tab" data-page="notes">📌 Notes</button><button class="tab" data-page="contacts">🆘 Contacts</button><button class="tab" data-page="reports">📊 Reports</button><button class="tab" data-page="calendar">🗓️ Calendar</button><button class="tab" data-page="achievements">🏆 Achievements</button><button class="tab" data-page="settings">⚙️ Settings</button>
+</nav>
+
+<section id="home" class="page active">
+<div class="grid"><div class="card stat"><span>Tasks today</span><strong id="st">0/0</strong></div><div class="card stat"><span>Reminders</span><strong id="sr">0</strong></div><div class="card stat"><span>Expense today</span><strong id="se">₹0</strong></div><div class="card stat"><span>Water</span><strong id="sw">0%</strong></div></div>
+<div class="quickgrid">
+<div class="quickcard"><b>🔥</b><span>Habit streak <strong id="streak">0</strong></span></div>
+<div class="quickcard"><b>🎯</b><span>Goals <strong id="goalCount">0</strong></span></div>
+<div class="quickcard"><b>🏆</b><span>Badges <strong id="badgeCount">0</strong></span></div>
+<div class="quickcard"><b>📌</b><span>Notes <strong id="noteCount">0</strong></span></div>
+<div class="quickcard"><b>💾</b><span>Backup ready</span></div>
+</div>
+<div class="card" style="margin-top:13px"><div class="row"><h2>Quick Actions</h2><div class="actions"><button class="btn sm" onclick="openModal('task')">+ Task</button><button class="btn sm" onclick="openModal('reminder')">+ Reminder</button><button class="btn sm" onclick="openModal('expense')">+ Expense</button></div></div><div style="margin-top:14px"><b>Water</b><div class="progress" style="margin-top:7px"><i id="homeWater"></i></div><div class="actions" style="margin-top:9px"><button class="btn sm" onclick="addWater()">💧 + Glass</button><button class="btn sm soft" onclick="openModal('habit')">+ Habit</button></div></div></div>
+<div class="card" style="margin-top:13px"><div class="row"><h2>Today's focus</h2><span class="badge" id="todayDate"></span></div><div id="focus" class="list" style="margin-top:10px"></div></div>
+<div class="card" style="margin-top:13px"><div class="row"><h2>📡 Live Today View</h2><span class="badge">Real-time</span></div><div class="grid" style="margin-top:12px"><div class="live-stat"><span class="meta">Next reminder</span><b id="liveNextReminder">None</b></div><div class="live-stat"><span class="meta">Pending tasks</span><b id="livePendingTasks">0</b></div><div class="live-stat"><span class="meta">Budget used</span><b id="liveBudgetUsed">₹0</b></div><div class="live-stat"><span class="meta">Water left</span><b id="liveWaterLeft">0 glasses</b></div></div><div id="liveAdvice" class="meta" style="margin-top:12px"></div></div>
+<div class="card" style="margin-top:13px"><div class="row"><h2>🤖 AI Help</h2><span class="badge">Offline assistant</span></div><div id="aiChat" class="ai-chat" aria-live="polite"><div class="ai-msg bot">Namaste! Main aapke app data ke basis par daily planning, health habits aur budget mein help kar sakta hoon.</div></div><div class="ai-suggestions"><button onclick="askAI('Aaj mujhe kya karna chahiye?')">Aaj ka plan</button><button onclick="askAI('Mera budget kaisa hai?')">Budget check</button><button onclick="askAI('Health suggestion do')">Health tip</button><button onclick="askAI('Pending tasks batao')">Pending tasks</button></div><form class="ai-input" onsubmit="sendAI(event)"><input id="aiInput" maxlength="180" placeholder="AI Help se poochhein..." aria-label="Ask AI Help"><button class="btn" type="submit">Send</button></form></div>
+<div class="card" style="margin-top:13px"><div class="row"><h2>🎯 Daily Goals</h2><button class="btn sm" onclick="openModal('goal')">+ Goal</button></div><div id="goalList" class="list" style="margin-top:10px"></div></div>
+</section>
+
+<section id="calendar" class="page"><div class="row"><h2>🗓️ Calendar</h2><button class="btn" onclick="openModal('task')">+ Task</button></div><div class="card" style="margin-top:13px"><div class="row"><button class="btn soft sm" onclick="moveDay(-1)">← Previous</button><b id="calDate"></b><button class="btn soft sm" onclick="moveDay(1)">Next →</button></div><div id="calList" class="list" style="margin-top:12px"></div></div></section>
+
+<section id="achievements" class="page"><h2>🏆 Achievements</h2><div class="card"><div id="badges" class="list"></div></div></section>
+
+<section id="tasks" class="page"><div class="row"><h2>📝 Tasks</h2><button class="btn" onclick="openModal('task')">+ Add</button></div><input id="qTask" class="search" placeholder="Search tasks..." oninput="renderAll()"><div class="card"><div id="tasksList" class="list"></div></div></section>
+<section id="reminders" class="page"><div class="row"><h2>⏰ Reminders</h2><button class="btn" onclick="openModal('reminder')">+ Add</button></div><input id="qRem" class="search" placeholder="Search reminders..." oninput="renderAll()"><div class="card"><div id="remList" class="list"></div></div></section>
+<section id="expenses" class="page"><div class="row"><h2>💰 Money</h2><button class="btn" onclick="openModal('expense')">+ Add</button></div><input id="qExp" class="search" placeholder="Search expenses..." oninput="renderAll()"><div class="grid"><div class="card stat"><span>Today</span><strong id="et">₹0</strong></div><div class="card stat"><span>This month</span><strong id="em">₹0</strong></div><div class="card stat" onclick="editBudget()" style="cursor:pointer" title="Click to update monthly budget"><span>Budget left ✏️</span><strong id="eb">₹0</strong></div><div class="card stat"><span>Records</span><strong id="ec">0</strong></div></div><div class="card" style="margin-top:13px"><div id="expList" class="list"></div></div></section>
+<section id="health" class="page"><div class="row"><h2>❤️ Health & Habits</h2><div class="actions"><button class="btn" onclick="openModal('medicine')">+ Medicine</button><button class="btn soft" onclick="openModal('habit')">+ Habit</button></div></div><div class="card" style="margin-top:13px"><div class="row"><div><h3 style="margin:0">🆘 Emergency Contacts</h3><div class="meta">Important contacts for urgent situations</div></div><button class="btn sm danger" onclick="openModal('contact')">+ Add Contact</button></div><div id="healthEmergencyList" class="list" style="margin-top:10px"></div></div><div class="card" style="margin-top:13px"><h3>💧 Water</h3><p><b id="wc">0</b> / <span id="wg">8</span> glasses</p><div class="progress"><i id="wb"></i></div><div class="actions" style="margin-top:10px"><button class="btn" onclick="addWater()">+ Glass</button><button class="btn soft" onclick="setGoal()">Set goal</button><button class="btn danger" onclick="resetWater()">Reset</button></div></div><div class="card" style="margin-top:13px"><h3>💊 Medicines</h3><div id="medList" class="list"></div></div><div class="card" style="margin-top:13px"><h3>🌱 Habits</h3><div id="habitList" class="list"></div></div></section>
+<section id="exercise" class="page"><div class="row"><h2>🏃 Daily Exercise</h2><span class="badge">Healthy body, happy mind</span></div><div class="card" style="margin-top:13px"><div class="timerbox"><div><h3 id="exerciseName">Choose an exercise</h3><div class="meta" id="exerciseInfo">Timer starts when you choose an exercise.</div></div><div class="big-timer" id="exerciseTimer">00:30</div></div><div class="actions" style="margin-top:12px;justify-content:center"><button class="btn" onclick="startExercise()">▶ Start</button><button class="btn soft" onclick="pauseExercise()">⏸ Pause</button><button class="btn danger" onclick="resetExercise()">↺ Reset</button></div></div><h3 style="margin-top:18px">Exercises & Stretching</h3><div id="exerciseList" class="exercise-grid"></div></section>
+<section id="notes" class="page"><div class="row"><h2>📌 Notes</h2><button class="btn" onclick="openModal('note')">+ Note</button></div><input id="qNote" class="search" placeholder="Search notes..." oninput="renderAll()"><div class="card"><div id="noteList" class="list"></div></div></section>
+<section id="contacts" class="page"><div class="row"><h2>🆘 Trusted Contacts</h2><button class="btn" onclick="openModal('contact')">+ Add</button></div><input id="qCon" class="search" placeholder="Search contacts..." oninput="renderAll()"><div class="card"><div id="conList" class="list"></div></div></section>
+<section id="reports" class="page"><div class="row"><h2>📊 Reports</h2><div class="actions"><button class="btn" onclick="exportCSV()">📗 Excel</button><button class="btn" onclick="printPDF()">📄 PDF</button></div></div><div class="card" style="margin-top:13px"><h3>Expense by category</h3><div id="chart" class="barwrap"></div></div><div class="card" style="margin-top:13px"><h3>Monthly summary</h3><div id="summary" class="list"></div></div></section>
+<section id="settings" class="page"><h2>⚙️ Settings</h2><div class="card" style="margin-bottom:13px"><div class="row"><div><b>👤 My Profile</b><div class="meta">Your personal information and health basics</div></div><button class="btn sm soft" onclick="openProfileEditor()">✏️ Edit profile</button></div><div id="profileDetails" class="profile-details" style="margin-top:13px"></div></div><div class="card"><div class="row"><div><b>Entrance Guide & Guidelines</b><div class="meta">App features, usage steps and helpful safety guidelines.</div></div><button class="btn soft" onclick="replayGuide()">📖 Open Guide</button></div><hr style="border:0;border-top:1px solid var(--line);margin:15px 0"><div class="row"><div><b>Dark mode</b><div class="meta">Switch appearance</div></div><button class="btn soft" onclick="toggleTheme()">Toggle</button></div><hr style="border:0;border-top:1px solid var(--line);margin:15px 0"><div class="row"><div><b>Install app</b><div class="meta">Install this PWA on your phone/PC when supported.</div></div><button class="btn" onclick="installApp()">Install</button></div><hr style="border:0;border-top:1px solid var(--line);margin:15px 0"><div class="row"><div><b>Notifications</b><div class="meta" id="notifStatus">Checking…</div></div><button class="btn" onclick="enableNotifications()">Enable</button></div><div class="note" style="margin-top:8px">Notifications work only on HTTPS or localhost. If permission was blocked earlier, allow notifications in the browser's site settings and try again. Reminders are checked while the app is open.</div><hr style="border:0;border-top:1px solid var(--line);margin:15px 0"><div><b>Backup & Restore</b><div class="meta">Export all local data or restore a JSON backup. Keep exported files private because they may contain health and contact information.</div><div class="actions" style="margin-top:8px"><button class="btn" onclick="backup()">Export backup</button><button class="btn soft" onclick="document.getElementById('restore').click()">Import backup</button><input id="restore" type="file" accept=".json,application/json" class="hidden" onchange="restore(event)"></div></div><hr style="border:0;border-top:1px solid var(--line);margin:15px 0"><div><b>🔒 Privacy & Data</b><div class="meta" style="margin-top:7px;line-height:1.6">Your profile, health, finance and contact data is stored locally in this browser. Clearing browser storage can remove it. Export a backup regularly and do not share backup files.</div><div class="actions" style="margin-top:8px"><button class="btn sm danger" onclick="deleteMyData()">Delete my local data</button></div></div><hr style="border:0;border-top:1px solid var(--line);margin:15px 0"><div><b>👨‍💻 About the Creator</b><div class="meta" style="margin-top:7px;line-height:1.6"><b>Deb Ahirwar</b> is a student and a hardworking creator who is always eager to learn, grow, and explore new possibilities. He created this website with dedication and has much more to explore and build.</div><a class="btn sm" href="https://debofficial.odoo.com/" target="_blank" rel="noopener noreferrer" style="display:inline-block;text-decoration:none;margin-top:10px">Visit Creator Website</a></div><hr style="border:0;border-top:1px solid var(--line);margin:15px 0"><div class="row"><div><b>↪ Logout</b><div class="meta">Sign out from this device</div></div><button class="btn danger" onclick="logout()">Logout</button></div></div></section>
+</main>
+</div>
+
+<div id="moreMenu" class="more-menu"><h3>More sections</h3><div class="actions"><button class="btn soft sm" onclick="goMore('expenses')">💰 Money</button><button class="btn soft sm" onclick="goMore('exercise')">🏃 Exercise</button><button class="btn soft sm" onclick="goMore('notes')">📌 Notes</button><button class="btn soft sm" onclick="goMore('contacts')">🆘 Contacts</button><button class="btn soft sm" onclick="goMore('calendar')">🗓️ Calendar</button><button class="btn soft sm" onclick="goMore('reports')">📊 Reports</button><button class="btn soft sm" onclick="goMore('achievements')">🏆 Achievements</button><button class="btn soft sm" onclick="goMore('reminders')">⏰ Reminders</button><button class="btn soft sm" onclick="goMore('settings')">⚙️ Settings</button></div></div><div class="bottom"><div><button onclick="go('home')"><b>🏠</b>Home</button><button onclick="go('tasks')"><b>📝</b>Tasks</button><button onclick="go('health')"><b>❤️</b>Health</button><button onclick="toggleMore()"><b>☰</b>More</button></div></div>
+<div id="modal" class="modal"><div class="modalbox"><div class="row"><h2 id="mtitle">Add</h2><button class="close" onclick="closeModal()">✕</button></div><form id="form" onsubmit="saveForm(event)"><div id="fields"></div><div class="actions" style="margin-top:13px"><button class="btn">Save</button><button type="button" class="btn soft" onclick="closeModal()">Cancel</button></div></form></div></div>
+<div id="toast" class="toast"></div>
+
+<script>
+let KEY="jeevan_sahayak_real_v1";
+const LEGACY_KEY=KEY;
+function userDataKey(profile){return profile?.phone?`jeevan_sahayak_user_${String(profile.phone).replace(/[^0-9]/g,"")}`:LEGACY_KEY}
+function switchUserData(profile){
+  KEY=userDataKey(profile);
+  S=load();
+  S.profile=profile;
+  S.user=profile?.name||null;
+  S.session=true;
+  storageSet(SESSION_KEY,JSON.stringify({phone:profile?.phone||""}));
+  // Consume the old shared store after migrating it to the first profile only.
+  if(KEY!==LEGACY_KEY&&storageGet(LEGACY_KEY)&&!storageGet("jeevan_sahayak_legacy_migrated")){
+    storageSet("jeevan_sahayak_legacy_migrated","1");storageRemove(LEGACY_KEY);}
+  save();
+  saveAdminUserData(profile,S);
+}
+
+function today(){
+  let d=new Date();
+  d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
+  return d.toISOString().slice(0,10);
+}
+
+const base={
+  tasks:[], reminders:[], expenses:[], medicines:[], habits:[], notes:[], contacts:[], goals:[], exerciseLog:[],
+  water:{date:today(),count:0,goal:8}, budget:5000, theme:"light", language:"en", user:null, pin:null, session:false, notified:{}, profile:null
+};
+const USERS_KEY="jeevan_sahayak_users_v1";
+// Local central registry used by the admin dashboard on this browser/origin.
+// The user's own store remains available so app data is not lost if the registry is rebuilt.
+const ADMIN_DATA_KEY="jeevan_sahayak_admin_data_v1";
+const SESSION_KEY="jeevan_sahayak_active_session_v1";
+const GUIDE_KEY="jeevan_sahayak_guide_seen_v3";
+let captchaValue=0;
+function storageGet(key,fallback=""){try{return localStorage.getItem(key)??fallback}catch(_){return fallback}}
+function storageSet(key,value){try{localStorage.setItem(key,value);return true}catch(_){return false}}
+function storageRemove(key){try{localStorage.removeItem(key);return true}catch(_){return false}}
+function getUsers(){try{const x=JSON.parse(storageGet(USERS_KEY,"[]"));return Array.isArray(x)?x:[]}catch(_){return[]}}
+function saveUsers(users){if(storageSet(USERS_KEY,JSON.stringify(users)))return true;toast("Unable to save profile on this device.");return false}
+function saveAdminUserData(profile,data=S){
+  if(!profile?.phone)return false;
+  try{
+    const registry=JSON.parse(storageGet(ADMIN_DATA_KEY,"{}"))||{};
+    registry[String(profile.phone)]=JSON.parse(JSON.stringify({...data,profile:{...profile,passwordHash:undefined,password:undefined}}));
+    delete registry[String(profile.phone)].profile.passwordHash;
+    delete registry[String(profile.phone)].profile.password;
+    return storageSet(ADMIN_DATA_KEY,JSON.stringify(registry));
+  }catch(_){return false}
+}
+async function hashPassword(password){
+  if(globalThis.crypto?.subtle){const data=new TextEncoder().encode(password),digest=await crypto.subtle.digest("SHA-256",data);return Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,"0")).join("")}
+  return "local-"+Array.from(password).reduce((h,c)=>(Math.imul(31,h)+c.charCodeAt(0))|0,7).toString(16);
+}
+async function passwordMatches(profile,password){if(profile.passwordHash)return profile.passwordHash===await hashPassword(password);return profile.password===password}
+function newCaptcha(){const a=Math.floor(Math.random()*8)+1,b=Math.floor(Math.random()*8)+1;captchaValue=a+b;const text=`${a} + ${b} = ?`;["captchaQuestion","loginCaptchaQuestion","forgotCaptchaQuestion"].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=text})}
+function hideAuthScreens(){["guide","register","login","forgotPassword","adminLogin","admin","app"].forEach(id=>document.getElementById(id)?.classList.add("hidden"))}
+function showAdminLogin(){hideAuthScreens();document.getElementById("adminLogin").classList.remove("hidden")}
+function showRegister(){hideAuthScreens();document.getElementById("register").classList.remove("hidden");newCaptcha()}
+function showUserLogin(){hideAuthScreens();document.getElementById("login").classList.remove("hidden");newCaptcha()}
+function showForgotPassword(){hideAuthScreens();document.getElementById("forgotPassword").classList.remove("hidden");newCaptcha();setText("forgotResult","");document.getElementById("forgotResult")?.classList.add("hidden")}
+function showGuide(){
+  hideAuthScreens();
+  document.getElementById("guide")?.classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"instant"});
+}
+function replayGuide(){
+  try{localStorage.removeItem(GUIDE_KEY)}catch(_){ }
+  showGuide();
+}
+function guideWasSeen(){return storageGet(GUIDE_KEY)==="1"}
+function hasRegisteredUsers(){return getUsers().length>0}
+function toggleMore(){document.getElementById("moreMenu")?.classList.toggle("show")}
+function goMore(id){document.getElementById("moreMenu")?.classList.remove("show");go(id)}
+function startGuide(){try{localStorage.setItem(GUIDE_KEY,"1")}catch(_){}document.getElementById("guide").classList.add("hidden");showRegister()}
+function skipGuide(){startGuide()}
+function guideLogin(){try{localStorage.setItem(GUIDE_KEY,"1")}catch(_){}showUserLogin()}
+function adminSignIn(e){
+  e.preventDefault();
+  const username=document.getElementById("adminUser")?.value.trim();
+  const password=document.getElementById("adminPass")?.value;
+  if(username!=="Deb"||password!=="Deb@123")return toast("Invalid demo admin credentials.");
+  document.getElementById("adminLogin").classList.add("hidden");
+  document.getElementById("admin").classList.remove("hidden");
+  renderAdmin();
+}
+function adminLogout(){showUserLogin()}
+function renderAdmin(){
+  const rows=getUsers(),el=document.getElementById("adminUsers");if(!el)return;
+  const q=(document.getElementById("adminSearch")?.value||"").trim().toLowerCase();
+  const filtered=rows.filter(x=>`${x.name||""} ${x.gender||""} ${x.phone||""} ${x.dob||""}`.toLowerCase().includes(q));
+  setText("adminTotal",rows.length);setText("adminToday",rows.filter(x=>x.createdDate===today()).length);setText("adminMale",rows.filter(x=>x.gender==="Male").length);setText("adminFemale",rows.filter(x=>x.gender==="Female").length);
+  el.innerHTML=filtered.length?filtered.map(x=>`<tr><td><b>${esc(x.name)}</b></td><td>${esc(x.gender)}</td><td>${displayDob(x.dob)}</td><td>${esc(x.phone)}</td><td>${esc(x.createdAt)}</td><td><div class="actions"><button type="button" class="btn sm soft" onclick='viewUser(${JSON.stringify(String(x.phone||""))})'>View</button><button type="button" class="btn sm soft" onclick='exportUserData(${JSON.stringify(String(x.phone||""))})'>Data</button><button type="button" class="btn sm danger" onclick='removeUser(${JSON.stringify(String(x.phone||""))})'>Delete</button></div></td></tr>`).join(""):"<tr><td colspan=6>No matching user profiles.</td></tr>";
+}
+function viewUser(phone){
+  const x=getUsers().find(u=>String(u.phone)===String(phone)),el=document.getElementById("adminUserDetails");
+  if(!x||!el)return toast("User details not found.");
+  el.innerHTML=`<div class="row"><b>👤 User details</b><button type="button" class="close" onclick="document.getElementById('adminUserDetails').classList.add('hidden')">✕</button></div><div class="meta" style="line-height:1.8;margin-top:8px"><b>Name:</b> ${esc(x.name)}<br><b>Gender:</b> ${esc(x.gender)}<br><b>Date of birth:</b> ${esc(displayDob(x.dob))}<br><b>Phone:</b> ${esc(x.phone)}<br><b>Password:</b> Hidden for security<br><b>Registered:</b> ${esc(x.createdAt||"")}<br><b>Saved app data:</b> ${adminDataSummary(x.phone)}</div>`;
+  el.classList.remove("hidden");
+}
+function removeUser(phone){
+  const users=getUsers(),target=users.find(x=>String(x.phone)===String(phone));
+  if(!target)return toast("User profile not found.");
+  if(!confirm(`Delete profile of ${target.name||target.phone}?`))return;
+  const remaining=users.filter(x=>String(x.phone)!==String(phone));
+  if(!saveUsers(remaining))return;
+  if(S.profile&&String(S.profile.phone)===String(phone)){S.session=false;S.user=null;S.profile=null;save()}
+  try{
+    const registry=JSON.parse(storageGet(ADMIN_DATA_KEY,"{}"))||{};
+    delete registry[String(phone)];
+    storageSet(ADMIN_DATA_KEY,JSON.stringify(registry));
+  }catch(_){}
+  document.getElementById("adminUserDetails")?.classList.add("hidden");
+  renderAdmin();toast("User profile deleted.");
+}
+function clearUsers(){const users=getUsers();if(!users.length)return toast("No profiles to clear.");if(confirm("Delete all registered user profiles?")){saveUsers([]);storageRemove(ADMIN_DATA_KEY);S.session=false;S.user=null;S.profile=null;save();renderAdmin();toast("All profiles deleted.")}}
+function csvCell(value){return `"${String(value??"").replaceAll('"','""')}"`}
+function exportUsers(){
+  const users=getUsers();
+  if(!users.length)return toast("No user profiles to export.");
+  const keys=[...new Set(users.flatMap(x=>Object.keys(x)).filter(k=>!['password','passwordHash'].includes(k)))];
+  const labels={name:"Name",gender:"Gender",dob:"Date of birth",phone:"Phone",password:"Password",createdAt:"Registered",createdDate:"Registration date"};
+  const rows=[keys.map(k=>labels[k]||k),...users.map(x=>keys.map(k=>k==="dob"?displayDob(x[k]):x[k]??""))];
+  const csv="\uFEFF"+rows.map(row=>row.map(csvCell).join(",")).join("\r\n");
+  download("user-profiles.csv",csv,"text/csv;charset=utf-8");
+  toast(`${users.length} user profile(s) exported.`);
+}
+
+function makeId(){return globalThis.crypto?.randomUUID?.()||`${Date.now()}-${Math.random().toString(36).slice(2)}`} 
+function finiteNumber(value,fallback=0){const n=Number(value);return Number.isFinite(n)?n:fallback}
+
+function load(){
+  let raw={};
+  // Migrate the old single-user store only when no user-specific store exists.
+  if(KEY!==LEGACY_KEY&&!storageGet(KEY)&&storageGet(LEGACY_KEY)){
+    try{const legacy=JSON.parse(storageGet(LEGACY_KEY,"{}"));if(legacy&&typeof legacy==="object")storageSet(KEY,JSON.stringify(legacy));}catch(_){}
+  }
+  try{raw=JSON.parse(storageGet(KEY,"{}"))||{}}catch(e){raw={}}
+  let state=JSON.parse(JSON.stringify(base));
+  if(raw&&typeof raw==="object"&&!Array.isArray(raw))Object.assign(state,raw);
+  const lists=["tasks","reminders","expenses","medicines","habits","notes","contacts","goals"];
+  lists.forEach(k=>{
+    if(!Array.isArray(state[k]))state[k]=[];
+    const used=new Set();
+    state[k]=state[k].filter(x=>x&&typeof x==="object"&&!Array.isArray(x)).map(x=>{
+      let id=x.id==null?"":String(x.id);
+      // IDs can come from imported JSON; keep inline handlers safe and unique.
+      if(!/^[A-Za-z0-9_-]+$/.test(id)||used.has(id))id=makeId();
+      used.add(id);
+      const item={...x,id};
+      if(k==="expenses")item.amount=Math.max(0,finiteNumber(item.amount));
+      if(k==="habits")item.target=Math.max(1,Math.min(7,Math.round(finiteNumber(item.target,1))));
+      item.done=Boolean(item.done);
+      return item;
+    });
+  });
+  if(!state.water||typeof state.water!=="object"||Array.isArray(state.water))state.water={date:today(),count:0,goal:8};
+  state.water.date=/^\d{4}-\d{2}-\d{2}$/.test(String(state.water.date))?String(state.water.date):today();
+  state.water.count=Math.max(0,finiteNumber(state.water.count));
+  state.water.goal=Math.max(1,Math.round(finiteNumber(state.water.goal,8)));
+  state.budget=Math.max(0,finiteNumber(state.budget,5000));
+  if(typeof state.user!=="string")state.user=null;
+  if(typeof state.pin!=="string")state.pin=null;
+  if(state.theme!=="dark")state.theme="light";
+  if(!["en","hinglish","hi"].includes(state.language))state.language="en";
+  if(!state.notified||typeof state.notified!=="object"||Array.isArray(state.notified))state.notified={};
+  if(!Array.isArray(state.exerciseLog))state.exerciseLog=[];
+  if(!state.profile||typeof state.profile!=="object"||Array.isArray(state.profile))state.profile=null;
+  return state;
+}
+
+let S = load();
+let type="", editId=null, deferredPrompt=null;
+
+function save(){
+  if(!storageSet(KEY,JSON.stringify(S))){toast("Unable to save data on this device.");return false}
+  if(S.profile)saveAdminUserData(S.profile,S);
+  try{renderAll()}catch(e){console.error("Render error:",e);toast("Data saved, but the screen could not refresh.")}
+  return true
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function money(n){return"₹"+Number(n||0).toLocaleString("en-IN",{maximumFractionDigits:2})}
+function formatDate(value){if(!value)return"";const parts=String(value).split("-");return parts.length===3?`${parts[2]}/${parts[1]}/${parts[0]}`:String(value)}
+function displayDate(value){return formatDate(value)}
+function isOverdue(item){return item?.date&&item.date<today()&&!item.done}
+function displayDob(value){const parts=String(value||"").split("-");return parts.length===3?`${parts[2]}/${parts[1]}/${parts[0]}`:String(value||"")}
+function toast(x){let t=document.getElementById("toast");t.textContent=x;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
+function useLogoFallback(img){
+  img.onerror=null;
+  img.alt="Jeevan Sahayak logo";
+  img.src="data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1465d8"/><stop offset="1" stop-color="#16a34a"/></linearGradient></defs><rect width="256" height="256" rx="52" fill="url(#g)"/><circle cx="128" cy="82" r="30" fill="#fff"/><path d="M48 174c28-39 58-48 80-12 22-36 52-27 80 12-30-9-53 3-80 34-27-31-50-43-80-34Z" fill="#fff"/><path d="M109 78h38M128 59v38" stroke="#1465d8" stroke-width="10" stroke-linecap="round"/></svg>`);
+}
+
+function formatDob(input){
+  const digits=input.value.replace(/\D/g,"").slice(0,8);
+  input.value=digits.length>4?`${digits.slice(0,2)}/${digits.slice(2,4)}/${digits.slice(4)}`:digits.length>2?`${digits.slice(0,2)}/${digits.slice(2)}`:digits;
+}
+
+async function registerUser(e){
+  e.preventDefault();
+  const dobInput=document.getElementById("registerDob").value.trim(),m=dobInput.match(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/([0-9]{4})$/);
+  const password=document.getElementById("registerPassword").value;
+  const height=Number(document.getElementById("registerHeight").value),weight=Number(document.getElementById("registerWeight").value);
+  const profile={name:document.getElementById("registerName").value.trim(),gender:document.getElementById("registerGender").value,dob:m?`${m[3]}-${m[2]}-${m[1]}`:"",phone:document.getElementById("registerPhone").value.trim(),height,weight,passwordHash:await hashPassword(password)};
+  const answer=Number(document.getElementById("captchaAnswer").value);
+  if(!profile.name||!profile.gender||!m||!/^[0-9]{7,15}$/.test(profile.phone)||password.length<6||!Number.isFinite(height)||height<50||height>250||!Number.isFinite(weight)||weight<10||weight>300)return toast("Please enter valid registration details.");
+  const birth=new Date(Number(m[3]),Number(m[2])-1,Number(m[1]));if(Number(m[1])>new Date(Number(m[3]),Number(m[2]),0).getDate()||birth>new Date()||Number(m[3])<1900)return toast("Please enter a valid date of birth.");
+  if(answer!==captchaValue)return toast("Incorrect captcha.");
+  const users=getUsers();if(users.some(x=>x.phone===profile.phone))return toast("This phone number is already registered.");
+  profile.createdAt=new Date().toLocaleString();profile.createdDate=today();users.push(profile);  if(!saveUsers(users))return;
+  switchUserData(profile);S.pin=null;saveAdminUserData(profile,S);showApp();toast("Registration successful. Welcome "+profile.name+"!");
+}
+async function signIn(e){
+  e.preventDefault();const phone=document.getElementById("loginPhone").value.trim(),password=document.getElementById("loginPassword").value,answer=Number(document.getElementById("loginCaptchaAnswer").value);
+  if(answer!==captchaValue)return toast("Incorrect captcha.");const profile=getUsers().find(x=>x.phone===phone);
+  if(profile&&!(await passwordMatches(profile,password)))return toast("Incorrect phone number or password.");
+  if(!profile)return toast("Incorrect phone number or password.");
+  // Upgrade profiles created by an older version that stored a plain password.
+  if(profile.password&&!profile.passwordHash){profile.passwordHash=await hashPassword(password);delete profile.password;saveUsers(getUsers().map(x=>x.phone===profile.phone?profile:x))}
+  switchUserData(profile);showApp();toast("Welcome back, "+profile.name+"!");
+}
+async function recoverPassword(e){
+  e.preventDefault();
+  const phone=document.getElementById("forgotPhone").value.trim(),dob=document.getElementById("forgotDob").value.trim(),answer=Number(document.getElementById("forgotCaptchaAnswer").value),newPassword=document.getElementById("forgotNewPassword").value,result=document.getElementById("forgotResult");
+  if(answer!==captchaValue)return toast("Incorrect captcha.");
+  const m=dob.match(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/([0-9]{4})$/),normalized=m?`${m[3]}-${m[2]}-${m[1]}`:"";
+  const users=getUsers(),index=users.findIndex(x=>x.phone===phone&&x.dob===normalized);
+  if(index<0||newPassword.length<6){result.innerHTML="<b style=\"color:#dc2626\">Details do not match or password is too short.</b>";result.classList.remove("hidden");newCaptcha();return}
+  users[index].passwordHash=await hashPassword(newPassword);delete users[index].password;
+  if(!saveUsers(users))return;
+  result.innerHTML="<b style=\"color:#16a34a\">Password reset successfully. You can now login.</b>";
+  result.classList.remove("hidden");e.target.reset();newCaptcha();
+}
+function calculateAge(dob){if(!dob)return "Not set";const birth=new Date(`${dob}T00:00:00`),now=new Date();let age=now.getFullYear()-birth.getFullYear();const beforeBirthday=now.getMonth()<birth.getMonth()||(now.getMonth()===birth.getMonth()&&now.getDate()<birth.getDate());return String(Math.max(0,age-(beforeBirthday?1:0)))+" years"}
+function renderProfile(){const p=S.profile,el=document.getElementById("profileDetails");if(!p||!el)return;const height=Number(p.height),weight=Number(p.weight),bmi=height>0&&weight>0?(weight/((height/100)**2)).toFixed(1):"Not set";el.innerHTML=`<div class="profile-field"><span>Name</span><b>${esc(p.name||S.user||"Not set")}</b></div><div class="profile-field"><span>Gender</span><b>${esc(p.gender||"Not set")}</b></div><div class="profile-field"><span>Age</span><b>${calculateAge(p.dob)}</b></div><div class="profile-field"><span>Date of birth</span><b>${esc(displayDob(p.dob)||"Not set")}</b></div><div class="profile-field"><span>Height</span><b>${height?height+" cm":"Not set"}</b></div><div class="profile-field"><span>Weight</span><b>${weight?weight+" kg":"Not set"}</b></div><div class="profile-field"><span>BMI</span><b>${bmi}</b></div><div class="profile-field"><span>Phone</span><b>${esc(p.phone||"Not set")}</b></div><div class="profile-field"><span>Member since</span><b>${esc(p.createdDate||"Not set")}</b></div>`}
+function openProfileEditor(){const p=S.profile;if(!p)return toast("Profile not available.");const height=Number(p.height)||"",weight=Number(p.weight)||"";document.getElementById("mtitle").textContent="Edit profile";document.getElementById("fields").innerHTML=`<div class="form"><div class="field full"><label>Name</label><input name="profileName" maxlength="50" required value="${esc(p.name)}"></div><div class="field"><label>Gender</label><select name="profileGender"><option ${p.gender==="Male"?"selected":""}>Male</option><option ${p.gender==="Female"?"selected":""}>Female</option><option ${p.gender==="Other"?"selected":""}>Other</option><option ${p.gender==="Prefer not to say"?"selected":""}>Prefer not to say</option></select></div><div class="field"><label>Date of birth</label><input name="profileDob" type="date" required value="${esc(p.dob||"")}"></div><div class="field"><label>Height (cm)</label><input name="profileHeight" type="number" min="50" max="250" step="0.1" required value="${height}"></div><div class="field"><label>Weight (kg)</label><input name="profileWeight" type="number" min="10" max="300" step="0.1" required value="${weight}"></div><div class="field"><label>Phone</label><input value="${esc(p.phone||"")}" disabled></div></div>`;type="profile";editId=null;document.getElementById("modal").classList.add("show")}
+function showApp(){document.getElementById("guide").classList.add("hidden");hideAuthScreens();document.getElementById("app").classList.remove("hidden");applyTheme();applyLanguage();renderAll()}
+
+// Keep a logged-in user signed in across page refreshes and browser restarts.
+// Only the explicit Logout button clears this session.
+function restoreSession(){
+  let activePhone="";
+  try{activePhone=String(JSON.parse(localStorage.getItem(SESSION_KEY)||"{}").phone||"")}catch(_){}
+  // Migrate a session created before the persistent session key was added.
+  if(!activePhone&&S.session&&S.profile?.phone)activePhone=String(S.profile.phone);
+  const sessionProfile=activePhone?getUsers().find(x=>String(x.phone)===activePhone):null;
+  if(!sessionProfile)return false;
+  KEY=userDataKey(sessionProfile);
+  S=load();
+  S.profile={...sessionProfile,...(S.profile||{})};
+  S.user=S.profile.name||sessionProfile.name||null;
+  S.session=true;
+  saveAdminUserData(S.profile,S);
+  save();
+  go("home");
+  showApp();
+  return true;
+}
+
+if(!restoreSession()){
+  // Every fresh/new user starts at the entrance guide. Existing users can still log in from it.
+  showGuide();
+}
+
+// Make startup resilient if saved data is incomplete or an older browser lacks optional APIs.
+window.addEventListener("error",event=>{
+  console.error("App error:",event.error||event.message);
+  const splash=document.getElementById("splash");
+  if(splash)splash.classList.add("hide");
+  if(!document.getElementById("app")?.classList.contains("hidden")&&event.error)toast("App loaded with a minor error. Please refresh once.");
+});
+function deleteMyData(){
+  if(!confirm("Delete your profile and all local app data? This cannot be undone."))return;
+  const phone=S.profile?.phone;
+  try{
+    localStorage.removeItem(KEY);localStorage.removeItem(SESSION_KEY);
+    if(phone){
+      saveUsers(getUsers().filter(x=>String(x.phone)!==String(phone)));
+      const registry=JSON.parse(storageGet(ADMIN_DATA_KEY,"{}"))||{};
+      delete registry[String(phone)];
+      storageSet(ADMIN_DATA_KEY,JSON.stringify(registry));
+    }
+  }catch(_){return toast("Unable to delete local data.")}
+  S=load();KEY=LEGACY_KEY;showRegister();toast("Your local profile and data were deleted.");
+}
+function logout(){
+  const currentKey=KEY;
+  S.session=false;S.user=null;S.profile=null;
+  try{localStorage.setItem(currentKey,JSON.stringify(S));localStorage.removeItem(SESSION_KEY)}catch(_){ }
+  KEY=LEGACY_KEY;
+  document.getElementById("app").classList.add("hidden");
+  showGuide();
+}
+function toggleTheme(){S.theme=S.theme==="dark"?"light":"dark";save();applyTheme()}
+function applyTheme(){document.documentElement.dataset.theme=S.theme;const hello=document.getElementById("hello");if(hello)hello.textContent=(S.language==="hi"?"नमस्ते, ":S.language==="hinglish"?"Namaste, ":"Hi, ")+(S.user||"");const select=document.getElementById("languageSelect");if(select)select.value=S.language||"en"}
+const UI_TEXT={en:{home:"🏠 Home",tasks:"📝 Tasks",reminders:"⏰ Reminders",expenses:"💰 Money",health:"❤️ Health",exercise:"🏃 Exercise",notes:"📌 Notes",contacts:"🆘 Contacts",reports:"📊 Reports",calendar:"🗓️ Calendar",achievements:"🏆 Achievements",settings:"⚙️ Settings"},hinglish:{home:"🏠 Home",tasks:"📝 Kaam",reminders:"⏰ Yaad-dihani",expenses:"💰 Paise",health:"❤️ Sehat",exercise:"🏃 Exercise",notes:"📌 Notes",contacts:"🆘 Contacts",reports:"📊 Reports",calendar:"🗓️ Calendar",achievements:"🏆 Awards",settings:"⚙️ Settings"},hi:{home:"🏠 होम",tasks:"📝 कार्य",reminders:"⏰ अनुस्मारक",expenses:"💰 पैसे",health:"❤️ स्वास्थ्य",exercise:"🏃 व्यायाम",notes:"📌 नोट्स",contacts:"🆘 संपर्क",reports:"📊 रिपोर्ट",calendar:"🗓️ कैलेंडर",achievements:"🏆 उपलब्धियाँ",settings:"⚙️ सेटिंग्स"}};
+function setLanguage(language){
+  if(!UI_TEXT[language])language="en";
+  S.language=language;
+  applyLanguage();
+  save();
+  toast(language==="hi"?"भाषा बदल दी गई।":language==="hinglish"?"Language change ho gayi.":"Language changed.");
+}
+function applyLanguage(){
+  const labels=UI_TEXT[S.language]||UI_TEXT.en;
+  document.querySelectorAll(".tab[data-page]").forEach(b=>{const key=b.dataset.page;if(labels[key])b.textContent=labels[key]});
+  applyTheme();
+}
+function go(id){document.getElementById("moreMenu")?.classList.remove("show");document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.page===id));window.scrollTo({top:0,behavior:"smooth"})}
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>go(b.dataset.page));
+function ensureDay(){
+  if(!S.water||typeof S.water!=="object")S.water={date:today(),count:0,goal:8};
+  S.water.goal=Math.max(1,Number(S.water.goal)||8);
+  S.water.count=Math.max(0,Number(S.water.count)||0);
+  if(S.water.date!==today())S.water={date:today(),count:0,goal:S.water.goal};
+}
+
+function openModal(t,id=null){
+  type=t;editId=id;let key={task:"tasks",reminder:"reminders",expense:"expenses",medicine:"medicines",habit:"habits",note:"notes",contact:"contacts",goal:"goals"}[t];if(!key)return;let x=id?S[key].find(a=>String(a.id)===String(id)):null;if(id&&!x)return toast("Item not found.");document.getElementById("mtitle").textContent=(id?"Edit ":"Add ")+t;
+  let fields={
+  task:`<div class="form"><div class="field full"><label>Task</label><input name="title" maxlength="100" required value="${esc(x?.title)}"></div><div class="field"><label>Date</label><input name="date" type="date" required value="${x?.date||today()}"></div><div class="field"><label>Priority</label><select name="priority"><option ${x?.priority==="Normal"?"selected":""}>Normal</option><option ${x?.priority==="High"?"selected":""}>High</option><option ${x?.priority==="Low"?"selected":""}>Low</option></select></div></div>`,
+  reminder:`<div class="form"><div class="field full"><label>Reminder</label><input name="title" maxlength="100" required value="${esc(x?.title)}"></div><div class="field"><label>Date</label><input name="date" type="date" required value="${x?.date||today()}"></div><div class="field"><label>Time</label><input name="time" type="time" required value="${x?.time||""}"></div><div class="field"><label>Repeat</label><select name="repeat"><option value="none" ${!x?.repeat||x?.repeat==="none"?"selected":""}>Does not repeat</option><option value="daily" ${x?.repeat==="daily"?"selected":""}>Every day</option><option value="weekly" ${x?.repeat==="weekly"?"selected":""}>Every week</option></select></div></div>`,
+  expense:`<div class="form"><div class="field"><label>Amount ₹</label><input name="amount" type="number" min=".01" step=".01" required value="${x?.amount||""}"></div><div class="field"><label>Category</label><select name="category">${["Food","Travel","Study","Shopping","Bills","Health","Other"].map(c=>`<option ${x?.category===c?"selected":""}>${c}</option>`).join("")}</select></div><div class="field"><label>Date</label><input name="date" type="date" required value="${x?.date||today()}"></div><div class="field"><label>Note</label><input name="note" maxlength="100" value="${esc(x?.note)}"></div></div>`,
+  medicine:`<div class="form"><div class="field full"><label>Medicine</label><input name="name" maxlength="100" required value="${esc(x?.name)}"></div><div class="field"><label>Dosage</label><input name="dose" maxlength="50" value="${esc(x?.dose)}"></div><div class="field"><label>Time</label><input name="time" type="time" required value="${x?.time||""}"></div><div class="field"><label>Start date</label><input name="date" type="date" required value="${x?.date||today()}"></div></div>`,
+  habit:`<div class="form"><div class="field full"><label>Habit</label><input name="name" maxlength="100" required value="${esc(x?.name)}"></div><div class="field"><label>Target per week</label><input name="target" type="number" min="1" max="7" value="${x?.target||1}"></div></div>`,
+  note:`<div class="form"><div class="field full"><label>Title</label><input name="title" maxlength="100" required value="${esc(x?.title)}"></div><div class="field full"><label>Note</label><textarea name="body" maxlength="2000">${esc(x?.body)}</textarea></div></div>`,
+  contact:`<div class="form"><div class="field"><label>Name</label><input name="name" maxlength="100" required value="${esc(x?.name)}"></div><div class="field"><label>Phone</label><input name="phone" type="tel" maxlength="30" required value="${esc(x?.phone)}"></div><div class="field"><label>Relationship</label><input name="relation" maxlength="50" value="${esc(x?.relation)}"></div><div class="field"><label>Type</label><select name="kind"><option ${x?.kind!=="Emergency"?"selected":""}>Trusted</option><option ${x?.kind==="Emergency"?"selected":""}>Emergency</option></select></div></div>`, 
+  goal:`<div class="form"><div class="field full"><label>Goal</label><input name="title" maxlength="100" required value="${esc(x?.title)}"></div><div class="field"><label>Target date</label><input name="date" type="date" value="${x?.date||today()}"></div></div>`
+  };
+  if(!fields[t])return;
+  document.getElementById("fields").innerHTML=fields[t];
+  document.getElementById("modal").classList.add("show");
+  document.querySelector("#fields input, #fields textarea")?.focus();
+}
+function closeModal(){document.getElementById("modal").classList.remove("show");type="";editId=null}
+function saveForm(e){
+  e.preventDefault();
+  const data=Object.fromEntries(new FormData(e.target).entries());
+  if(type==="profile"){
+    const p=S.profile,n={name:String(data.profileName||"").trim(),gender:data.profileGender,dob:data.profileDob,height:Number(data.profileHeight),weight:Number(data.profileWeight)};
+    if(!n.name||!n.dob||!Number.isFinite(n.height)||n.height<50||n.height>250||!Number.isFinite(n.weight)||n.weight<10||n.weight>300)return toast("Please enter valid profile details.");
+    const birth=new Date(`${n.dob}T00:00:00`);if(Number.isNaN(birth.getTime())||birth>new Date())return toast("Please enter a valid date of birth.");
+    S.profile={...p,...n};S.user=n.name;const users=getUsers().map(x=>String(x.phone)===String(p.phone)?{...x,...n}:x);if(!saveUsers(users))return;closeModal();save();toast("Profile updated successfully.");return;
+  }
+  const key={task:"tasks",reminder:"reminders",expense:"expenses",medicine:"medicines",habit:"habits",note:"notes",contact:"contacts",goal:"goals"}[type];
+  if(!key)return;
+  if(type==="expense"){data.amount=Number(data.amount);if(!Number.isFinite(data.amount)||data.amount<=0)return toast("Enter a valid amount.")}
+  if(type==="habit")data.target=Math.max(1,Math.min(7,Number(data.target)||1));
+  if(type==="reminder"&&!['none','daily','weekly'].includes(data.repeat))data.repeat='none';
+  if(editId){const i=S[key].findIndex(a=>String(a.id)===String(editId));if(i>=0)S[key][i]={...S[key][i],...data};else return toast("Item not found.")}
+  else S[key].push({id:globalThis.crypto?.randomUUID?.()||`${Date.now()}-${Math.random().toString(36).slice(2)}`,created:Date.now(),done:false,...data});
+  closeModal();save();toast("Saved successfully.")
+}
+function removeItem(key,id){if(!Array.isArray(S[key]))return;if(!confirm("Delete this item?"))return;S[key]=S[key].filter(x=>String(x.id)!==String(id));save();toast("Deleted.")}
+function toggleItem(key,id){const x=S[key]?.find(a=>String(a.id)===String(id));if(x){x.done=!Boolean(x.done);save()}}
+function query(id){return (document.getElementById(id)?.value||"").trim().toLowerCase()}
+function itemButtons(key,x,done=false){
+  const id=esc(x.id);
+  const safeId=esc(JSON.stringify(String(x.id))),safeKey=esc(JSON.stringify(key));
+  const typeMap={tasks:"task",reminders:"reminder",goals:"goal",habits:"habit"};
+  const editType=typeMap[key];
+  return `<div class="actions"><button class="btn sm ${done?"ok":"soft"}" onclick="toggleItem(${safeKey},${safeId})">${done?"↩ Undo":"✓ Done"}</button>${editType?`<button class="btn sm soft" onclick="openModal('${editType}',${safeId})">✏️</button>`:""}<button class="btn sm danger" onclick="removeItem(${safeKey},${safeId})">🗑️</button></div>`
+}
+function renderList(id,items,html,empty="Nothing here yet."){const el=document.getElementById(id);if(el)el.innerHTML=items.length?items.map(html).join(""):`<div class="meta">${empty}</div>`}
+function addAIMessage(text,kind="bot"){
+  const chat=document.getElementById("aiChat");if(!chat)return;
+  const msg=document.createElement("div");msg.className=`ai-msg ${kind}`;msg.textContent=text;chat.appendChild(msg);chat.scrollTop=chat.scrollHeight;
+}
+function askAI(question){
+  const input=document.getElementById("aiInput");if(input)input.value=question;
+  sendAI({preventDefault(){}});
+}
+function sendAI(e){
+  e.preventDefault();const input=document.getElementById("aiInput"),question=(input?.value||"").trim();if(!question)return;
+  addAIMessage(question,"user");if(input)input.value="";
+  const q=question.toLowerCase(),pending=S.tasks.filter(x=>!x.done&&x.date<=today()).sort((a,b)=>(a.date||"").localeCompare(b.date||"")),todayTasks=S.tasks.filter(x=>x.date===today()&&!x.done),next=S.reminders.filter(x=>!x.done&&x.date>=today()).sort((a,b)=>`${a.date} ${a.time}`.localeCompare(`${b.date} ${b.time}`))[0],month=today().slice(0,7),spent=S.expenses.filter(x=>x.date?.startsWith(month)).reduce((a,x)=>a+Number(x.amount||0),0),waterLeft=Math.max(0,S.water.goal-S.water.count);
+  let answer;
+  if(q.includes("budget")||q.includes("expense")||q.includes("money"))answer=`Is month ka spending ${money(spent)} hai aur budget mein ${money(Math.max(0,S.budget-spent))} left hai. ${spent>S.budget?"Budget cross ho gaya—non-essential expenses pause karein.":"Aaj ke expenses note karte rahen."}`;
+  else if(q.includes("health")||q.includes("water")||q.includes("sehat"))answer=`Aaj ${waterLeft} glass water baaki hai. ${S.habits.length?`Aapke ${S.habits.length} habits tracked hain—ek chhota habit abhi complete karein.`:"Ek simple daily habit add karke shuru karein."}`;
+  else if(q.includes("pending")||q.includes("task"))answer=pending.length?`Aapke ${pending.length} pending task hain. Sabse pehle: “${pending[0].title}”.`:"Bahut badhiya! Koi pending task nahi hai.";
+  else if(q.includes("reminder")||q.includes("next"))answer=next?`Next reminder: “${next.title}”, ${displayDate(next.date)} ${next.time||""}.`:"Aaj ke liye koi upcoming reminder nahi hai.";
+  else answer=`Aaj ke liye ${todayTasks.length} pending task, ${waterLeft} glass water aur ${money(Math.max(0,S.budget-spent))} budget remaining hai. Pehle ek important task complete karein, phir water log karein.`;
+  setTimeout(()=>addAIMessage(answer),180);
+}
+function renderLiveView(){
+  const pending=S.tasks.filter(x=>x.date===today()&&!x.done),next=S.reminders.filter(x=>!x.done&&x.date>=today()).sort((a,b)=>`${a.date} ${a.time}`.localeCompare(`${b.date} ${b.time}`))[0],spent=S.expenses.filter(x=>x.date?.startsWith(today().slice(0,7))).reduce((a,x)=>a+Number(x.amount||0),0),left=Math.max(0,S.water.goal-S.water.count);
+  setText("liveNextReminder",next?`${next.title} · ${displayDate(next.date)} ${next.time||""}`:"None");setText("livePendingTasks",pending.length);setText("liveBudgetUsed",money(spent));setText("liveWaterLeft",`${left} glass${left===1?"":"es"}`);setText("liveAdvice",pending.length?`Focus tip: “${pending[0].title}” complete karna aaj ka best next step hai.`:"Aaj ke tasks complete hain—apni progress maintain rakhein.");
+}
+function renderAll(){
+  if(!S||typeof S!=="object")return;
+  ensureDay();
+  const t=S.tasks.filter(x=>x.date===today()),td=t.filter(x=>x.done).length;
+  setText("st",`${td}/${t.length}`);setText("sr",S.reminders.filter(x=>x.date===today()).length);setText("se",money(S.expenses.filter(x=>x.date===today()).reduce((a,x)=>a+Number(x.amount||0),0)));
+  const pct=Math.min(100,Math.round(S.water.count/S.water.goal*100));setText("sw",pct+"%");setText("wc",S.water.count);setText("wg",S.water.goal);setWidth("wb",pct);setWidth("homeWater",pct);setText("todayDate",displayDate(today()));
+  setText("goalCount",S.goals.filter(x=>!x.done).length);setText("noteCount",S.notes.length);setText("streak",S.habits.filter(x=>x.done).length);setText("badgeCount",badgeData().filter(x=>x.on).length);renderProfile();
+  const taskFilter=S.tasks.filter(x=>(`${x.title} ${x.priority} ${x.date}`).toLowerCase().includes(query("qTask")));
+  renderList("tasksList",taskFilter,x=>`<div class="item ${x.done?"done":""}"><div class="main"><div class="title">${esc(x.title)} ${isOverdue(x)?'<span class="badge overdue">Overdue</span>':''}</div><div class="meta ${isOverdue(x)?'overdue':''}">${displayDate(x.date)} · ${esc(x.priority||"Normal")}</div></div>${itemButtons("tasks",x,x.done)}</div>`);
+  const remFilter=S.reminders.filter(x=>(`${x.title} ${x.date} ${x.time} ${x.repeat||""}`).toLowerCase().includes(query("qRem")));
+  renderList("remList",remFilter,x=>`<div class="item ${x.done?"done":""}"><div class="main"><div class="title">${esc(x.title)}</div><div class="meta">${displayDate(x.date)} · ${esc(x.time||"")}</div></div>${itemButtons("reminders",x,x.done)}`);
+  const expFilter=S.expenses.filter(x=>(`${x.category} ${x.note} ${x.amount} ${x.date}`).toLowerCase().includes(query("qExp")));
+  const month=today().slice(0,7),monthTotal=S.expenses.filter(x=>x.date?.startsWith(month)).reduce((a,x)=>a+Number(x.amount||0),0);
+  setText("et",money(S.expenses.filter(x=>x.date===today()).reduce((a,x)=>a+Number(x.amount||0),0)));setText("em",money(monthTotal));setText("eb",money(S.budget-monthTotal));setText("ec",S.expenses.length);
+  renderList("expList",expFilter,x=>`<div class="item"><div class="main"><div class="title">${money(x.amount)} · ${esc(x.category)}</div><div class="meta">${displayDate(x.date)}${x.note?" · "+esc(x.note):""}</div></div><div class="actions"><button class="btn sm soft" onclick='openModal("expense",${JSON.stringify(x.id)})'>✏️</button><button class="btn sm danger" onclick='removeItem("expenses",${JSON.stringify(x.id)})'>🗑️</button></div></div>`);
+  renderList("focus",t.slice(0,5),x=>`<div class="item ${x.done?"done":""}"><div class="main"><div class="title">${esc(x.title)}</div><div class="meta">${esc(x.priority||"Normal")}</div></div>${itemButtons("tasks",x,x.done)}</div>`);
+  renderList("goalList",S.goals,x=>`<div class="item ${x.done?"done":""}"><div class="main"><div class="title">${esc(x.title)}</div><div class="meta">${x.date?"Target: "+displayDate(x.date):"No target date"}</div></div>${itemButtons("goals",x,x.done)}</div>`);
+  renderList("medList",S.medicines,x=>`<div class="item"><div class="main"><div class="title">💊 ${esc(x.name)}</div><div class="meta">${esc(x.dose||"Dose not set")} · ${esc(x.time||"No time")}</div></div><button class="btn sm danger" onclick='removeItem("medicines",${JSON.stringify(x.id)})'>🗑️</button></div>`);
+  renderList("habitList",S.habits,x=>`<div class="item ${x.done?"done":""}"><div class="main"><div class="title">🌱 ${esc(x.name)}</div><div class="meta">Target: ${x.target||1} days/week</div></div>${itemButtons("habits",x,x.done)}</div>`);
+  renderList("noteList",S.notes.filter(x=>(`${x.title} ${x.body}`).toLowerCase().includes(query("qNote"))),x=>`<div class="item"><div class="main"><div class="title">${esc(x.title)}</div><div class="meta">${esc(x.body||"")}</div></div><div class="actions"><button class="btn sm soft" onclick='openModal("note",${JSON.stringify(x.id)})'>✏️</button><button class="btn sm danger" onclick='removeItem("notes",${JSON.stringify(x.id)})'>🗑️</button></div></div>`);
+  const emergencyContacts=S.contacts.filter(x=>x.kind==="Emergency");
+  renderList("healthEmergencyList",emergencyContacts,x=>`<div class="item"><div class="main"><div class="title">🆘 ${esc(x.name)}</div><div class="meta">${esc(x.relation||"Emergency contact")} · ${esc(x.phone)}</div></div><div class="actions"><a class="btn sm ok" href="tel:${esc(x.phone)}" aria-label="Call emergency contact ${esc(x.name)}">📞 Call</a><button class="btn sm soft" onclick='openModal("contact",${JSON.stringify(x.id)})'>✏️</button></div></div>` ,"No emergency contacts added. Add a trusted person or local emergency number.");
+  renderList("conList",S.contacts.filter(x=>(`${x.name} ${x.phone} ${x.relation} ${x.kind}`).toLowerCase().includes(query("qCon"))),x=>`<div class="item"><div class="main"><div class="title">${x.kind==="Emergency"?"🆘 ":""}${esc(x.name)} ${x.kind==="Emergency"?'<span class="badge">Emergency</span>':""}</div><div class="meta">${esc(x.relation||"")} · ${esc(x.phone)}</div></div><div class="actions"><a class="btn sm ok" href="tel:${esc(x.phone)}" aria-label="Call ${esc(x.name)}">Call</a><button class="btn sm soft" onclick='openModal("contact",${JSON.stringify(x.id)})'>✏️</button><button class="btn sm danger" onclick='removeItem("contacts",${JSON.stringify(x.id)})'>🗑️</button></div></div>`);
+  renderCalendar();renderReports();renderBadges();renderLiveView();updateNotificationStatus();
+}
+function setText(id,v){const e=document.getElementById(id);if(e)e.textContent=v}
+function setWidth(id,v){const e=document.getElementById(id);if(e)e.style.width=v+"%"}
+let calOffset=0;
+function moveDay(n){calOffset+=n;renderCalendar()}
+function renderCalendar(){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+calOffset);const date=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;setText("calDate",displayDate(date));const all=[...S.tasks,...S.reminders].filter(x=>x.date===date);renderList("calList",all,x=>`<div class="item ${x.done?"done":""}"><div><div class="title">${esc(x.title)}</div><div class="meta">${x.time?esc(x.time):"Task"}</div></div></div>`) }
+function editBudget(){const n=Number(prompt("Monthly budget (₹):",S.budget));if(Number.isFinite(n)&&n>=0){S.budget=n;save()}}
+function setGoal(){const n=Number(prompt("Daily water goal (glasses):",S.water.goal));if(Number.isFinite(n)&&n>0){S.water.goal=Math.round(n);save()}}
+function addWater(){ensureDay();S.water.count=Math.min(S.water.count+1,S.water.goal);save();toast(S.water.count>=S.water.goal?"Daily water goal reached.":"Water logged.")}
+function resetWater(){if(confirm("Reset today's water count?")){S.water.count=0;save()}}
+function badgeData(){return[{name:"First task",on:S.tasks.length>0},{name:"Task finisher",on:S.tasks.some(x=>x.done)},{name:"Hydration hero",on:S.water.count>=S.water.goal},{name:"Note taker",on:S.notes.length>0},{name:"Money tracker",on:S.expenses.length>0}]}
+const EXERCISES=[
+  {name:"Jumping Jacks",seconds:30,info:"Full-body cardio",icon:"⚡"},{name:"Squats",seconds:40,info:"Leg strength",icon:"🦵"},{name:"Lunges",seconds:40,info:"Balance and legs",icon:"🚶"},{name:"Push-ups",seconds:30,info:"Chest and arms",icon:"💪"},{name:"Knee Push-ups",seconds:30,info:"Beginner upper body",icon:"🌱"},{name:"Plank",seconds:30,info:"Core strength",icon:"🧱"},{name:"Mountain Climbers",seconds:30,info:"Cardio and core",icon:"🏔️"},{name:"High Knees",seconds:30,info:"Warm-up cardio",icon:"🏃"},{name:"Glute Bridge",seconds:40,info:"Hips and lower back",icon:"🌉"},{name:"Calf Raises",seconds:40,info:"Ankle and calf strength",icon:"🦶"},{name:"Arm Circles",seconds:30,info:"Shoulder mobility",icon:"🔄",stretch:true},{name:"Neck Stretch",seconds:30,info:"Gentle neck release",icon:"🧘",stretch:true},{name:"Hamstring Stretch",seconds:40,info:"Back-leg flexibility",icon:"🧘",stretch:true},{name:"Quad Stretch",seconds:40,info:"Front-leg flexibility",icon:"🧘",stretch:true},{name:"Child's Pose",seconds:45,info:"Relaxing full-body stretch",icon:"🧘",stretch:true}
+];
+let activeExercise=null,exerciseSeconds=30,exerciseInterval=null;
+function renderExercises(){const el=document.getElementById("exerciseList");if(!el)return;el.innerHTML=EXERCISES.map((x,i)=>`<div class="exercise-card ${x.stretch?"stretch":""}"><h3>${x.icon} ${x.name}</h3><div class="meta">${x.info} · ${x.seconds}s</div><button class="btn sm" style="margin-top:9px" onclick="chooseExercise(${i})">Choose</button></div>`).join("")}
+function chooseExercise(i){activeExercise=EXERCISES[i];exerciseSeconds=activeExercise.seconds;setText("exerciseName",activeExercise.name);setText("exerciseInfo",activeExercise.info+" · "+activeExercise.seconds+" seconds");updateExerciseTimer()}
+function updateExerciseTimer(){setText("exerciseTimer",`${String(Math.floor(exerciseSeconds/60)).padStart(2,"0")}:${String(exerciseSeconds%60).padStart(2,"0")}`)}
+function startExercise(){if(!activeExercise)chooseExercise(0);if(exerciseInterval)return;exerciseInterval=setInterval(()=>{if(exerciseSeconds>0){exerciseSeconds--;updateExerciseTimer()}else{clearInterval(exerciseInterval);exerciseInterval=null;alarm("Exercise complete",activeExercise.name+" finished. Great job!");S.exerciseLog.push({name:activeExercise.name,date:today()});save()}},1000)}
+function pauseExercise(){clearInterval(exerciseInterval);exerciseInterval=null}
+function resetExercise(){pauseExercise();exerciseSeconds=activeExercise?.seconds||30;updateExerciseTimer()}
+function renderBadges(){renderList("badges",badgeData(),x=>`<div class="item ${x.on?"":"done"}"><div><div class="title">${x.on?"🏆":"🔒"} ${x.name}</div><div class="meta">${x.on?"Unlocked":"Keep using the assistant to unlock this badge."}</div></div></div>`);renderExercises()}
+function renderReports(){const cats={};S.expenses.forEach(x=>cats[x.category||"Other"]=(cats[x.category||"Other"]||0)+Number(x.amount||0));const vals=Object.entries(cats),max=Math.max(1,...vals.map(x=>x[1]));const chart=document.getElementById("chart");if(chart)chart.innerHTML=vals.length?vals.map(([k,v])=>`<div class="bar" style="height:${Math.max(5,v/max*100)}%"><em>${money(v)}</em><small>${esc(k)}</small></div>`).join(""):"<span class='meta'>No expense data yet.</span>";renderList("summary",[{label:"Total records",value:S.expenses.length},{label:"All-time spending",value:money(S.expenses.reduce((a,x)=>a+Number(x.amount||0),0))}],x=>`<div class="item"><b>${esc(x.label)}</b><span>${esc(x.value)}</span></div>`)}
+function exportCSV(){const rows=[["Date","Category","Amount","Note"],...S.expenses.map(x=>[x.date,x.category,x.amount,x.note||""])];download("expenses.csv","\uFEFF"+rows.map(r=>r.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(",")).join("\r\n"),"text/csv;charset=utf-8")}
+function printPDF(){window.print()}
+function download(name,data,mime){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:mime}));a.download=name;a.rel="noopener";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+function backup(){download("jeevan-sahayak-backup.json",JSON.stringify({version:2,exportedAt:new Date().toISOString(),data:S},null,2))}
+function adminDataForUser(phone){
+  try{
+    const registry=JSON.parse(storageGet(ADMIN_DATA_KEY,"{}"))||{};
+    return registry[String(phone)]||JSON.parse(storageGet(userDataKey({phone}),"null"));
+  }catch(_){return null}
+}
+function adminDataSummary(phone){
+  const data=adminDataForUser(phone);
+  if(!data)return "Not available";
+  const keys=["tasks","reminders","expenses","medicines","habits","notes","contacts","goals","exerciseLog"];
+  const records=keys.reduce((total,key)=>total+(Array.isArray(data[key])?data[key].length:0),0);
+  const expenses=Array.isArray(data.expenses)?data.expenses.reduce((sum,x)=>sum+Number(x.amount||0),0):0;
+  const language=data.language||"en";
+  return `${records} records · Expenses: ${money(expenses)} · Language: ${language}`;
+}
+function exportUserData(phone){const data=adminDataForUser(phone);if(!data)return toast("User data not found.");download(`user-${String(phone).replace(/[^0-9]/g,"")}-data.json`,JSON.stringify(data,null,2),"application/json");toast("User app data exported.")}
+function restore(e){const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{let data=JSON.parse(r.result);if(data?.data&&typeof data.data==="object")data=data.data;if(!data||typeof data!=="object"||Array.isArray(data))throw Error();localStorage.setItem(KEY,JSON.stringify(data));S=load();if(!save())throw Error();toast("Backup restored.")}catch(_){toast("Invalid backup file.")}if(e.target)e.target.value=""};r.onerror=()=>{toast("Unable to read backup file.");if(e.target)e.target.value=""};r.readAsText(f)}
+let audioContext=null;
+function alarm(title,body){try{audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();const o=audioContext.createOscillator(),g=audioContext.createGain();o.frequency.value=880;o.type="sine";g.gain.setValueAtTime(.001,audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.25,audioContext.currentTime+.03);g.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+.8);o.connect(g);g.connect(audioContext.destination);o.start();o.stop(audioContext.currentTime+.8)}catch(_){}if(typeof Notification!=="undefined"&&Notification.permission==="granted")new Notification(title,{body});toast("⏰ "+body)}
+async function enableNotifications(){
+  const secure=window.isSecureContext||['localhost','127.0.0.1'].includes(location.hostname);
+  const isStandalone=window.matchMedia?.('(display-mode: standalone)').matches||navigator.standalone===true;
+  if(!secure)return toast("Notifications ke liye app ko HTTPS par open karein.");
+  if(typeof Notification==="undefined"){
+    // Some installed iPhone/iPad web apps expose notifications through the
+    // browser only; do not incorrectly claim that the app itself is broken.
+    return toast(isStandalone?"Is device par installed web-app notifications supported nahi hain.":"Is browser mein notifications supported nahi hain.");
+  }
+  if(Notification.permission==="granted")return toast("Notifications already enabled hain.");
+  if(Notification.permission==="denied")return toast("Notifications blocked hain. Browser/site settings mein Allow karein.");
+  try{
+    const p=await Notification.requestPermission();
+    toast(p==="granted"?"Notifications enabled. Alarm alerts ready hain.":p==="denied"?"Permission denied. Browser/site settings mein Allow karein.":"Notification permission dismiss ho gayi.");
+  }catch(_){toast("Notification permission nahi mil saki. HTTPS par app open karke try karein.")}
+  updateNotificationStatus()
+}
+function checkAlerts(){
+  if(!S.user)return;
+  const now=new Date(),date=today(),time=`${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
+  [...S.reminders.map(x=>({...x,kind:"Reminder",label:x.title})),...S.medicines.map(x=>({...x,date:x.date||date,kind:"Medicine",label:x.name}))].forEach(x=>{
+    const key=`${x.kind}-${x.id}-${date}-${time}`;
+    const startDate=x.date||date;
+    const dayDiff=Math.floor((new Date(`${date}T00:00:00`)-new Date(`${startDate}T00:00:00`))/86400000);
+    const activeDate=x.kind==="Medicine"?(startDate<=date):startDate<=date&&(!x.repeat||x.repeat==="none"?startDate===date:x.repeat==="daily"?dayDiff>=0:dayDiff>=0&&new Date(`${date}T00:00:00`).getDay()===new Date(`${startDate}T00:00:00`).getDay());
+    if(!x.done&&activeDate&&x.time===time&&!S.notified[key]){
+      S.notified[key]=Date.now();
+      save();
+      alarm("⏰ "+x.kind,x.label+" — it is time now.");
+    }
+  });
+}
+function updateNotificationStatus(){
+  const status=!window.isSecureContext&&!['localhost','127.0.0.1'].includes(location.hostname)?"Requires HTTPS":typeof Notification==="undefined"?"Not supported":Notification.permission;
+  setText("notifStatus",status)
+}
+async function installApp(){
+  if(!deferredPrompt)return toast("Install is available from the browser menu when this site is served over HTTPS.");
+  try{await deferredPrompt.prompt();deferredPrompt=null}catch(_){toast("Unable to open the install prompt.")}
+}
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e});
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.getElementById("modal").classList.contains("show"))closeModal()});
+setInterval(()=>{if(S.user){checkAlerts();renderAll()}},15000);
+// Keep the uploaded logo visible briefly, but never block the app if startup fails.
+window.addEventListener("load",()=>setTimeout(()=>document.getElementById("splash")?.classList.add("hide"),700));
+window.addEventListener("unhandledrejection",event=>{
+  console.error("Startup promise error:",event.reason);
+  document.getElementById("splash")?.classList.add("hide");
+});
+</script>
+</body>
+</html>
